@@ -1,0 +1,18 @@
+module readOperation (rd, fifoEmpty, clk, rst, rptr, fifoRd); 
+  input rd, fifoEmpty, clk, rst; 
+  output reg [3:0]  rptr; 
+  output reg fifoRd; 
+  
+  always @(posedge clk or negedge rst)begin
+    if (!rst) rptr <= 4'b0000; 
+    else if (rd && !fifoEmpty)begin
+      rptr <= rptr + 4'b0001; 
+    end
+  end 
+  
+  assign fifoRd = rd && !fifoEmpty? 1'b1:1'b0; 
+
+endmodule
+
+
+    

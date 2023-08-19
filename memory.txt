@@ -1,0 +1,17 @@
+module memory (fifoRd, fifoWr, dataIn, rPtr, wPtr, clk, rst, dataOut); 
+  input fifoRd, fifoWr, rPtr, wPtr, clk, rst; 
+  input [7:0] dataIn; 
+  reg [7:0] memory [15:0];  
+  output reg [7:0] dataOut; 
+  
+  always @(posedge clk, fifoWr, fifoRd, negedge rst)begin
+    if (!rst) begin
+      dataOut <= 8'b0; 
+      for (integer i=0 ; i<16 ; i++)begin
+        memory [i] <= 8'b0; 
+      end 
+    end 
+    else if (fifoRd) dataOut <= memory[rPtr]; 
+    else if (fifoWr) memory[wPtr] <= dataIn; 
+  end 
+endmodule

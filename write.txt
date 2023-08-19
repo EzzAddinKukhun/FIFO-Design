@@ -1,0 +1,15 @@
+module writeOperation (wr, fifoFull, clk, rst, wptr, fifoWr); 
+  input rd, fifoFull, clk, rst; 
+  output reg [3:0]  wptr; 
+  output reg fifoWr; 
+  
+  always @(posedge clk or negedge rst)begin
+    if (!rst) wptr <= 4'b0000; 
+    else if (wr && !fifoFull)begin
+      wptr <= wptr + 4'b0001; 
+    end
+  end 
+  
+  assign fifoWr = wr && !fifoFull? 1'b1 : 1'b0; 
+
+endmodule
